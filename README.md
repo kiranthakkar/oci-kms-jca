@@ -1,4 +1,4 @@
-# oic-kms-jce
+# oci-kms-jca
 
 This project provides JCE provider OCI vault and certificates service. 
 
