@@ -2,7 +2,7 @@
 
 The Java Cryptography Architecture (JCA) is a framework for working with cryptography using the Java programming language. It forms part of the Java security. It uses provider-based architecture and contains a set of APIs for various purposes like encryption, key management, signing, hashing, signature verification, etc. This project provides custom implementation of the JCA interfaces to leverage OCI vault for content signing. 
 
-## Getting started
+# Getting started
 
 ### Pre-requisites
 
