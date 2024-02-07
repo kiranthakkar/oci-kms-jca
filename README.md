@@ -22,7 +22,9 @@ git push -uf origin main
 ```
 
 ## Installation
-You can use the library in your Java application to perform cryptographic operations. Refer to below blog posts to use the JCA provider to generate CSR and sign jar files. 
+You can use the library in your Java application to perform cryptographic operations. One target use case is to use OCI vault keys to sign jar files. Refer to below blog posts to learn more about it.
+
+![alt text](image.png)
 
 1. [Using OCI JCA provider to generate CSR](https://www.ateam-oracle.com/post/oci-jca-provider-use-case-generate-csr)
 2. jarsigner blog ling (TBD)
