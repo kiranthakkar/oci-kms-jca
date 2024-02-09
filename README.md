@@ -27,7 +27,7 @@ You can use the library in your Java application to perform cryptographic operat
 ![alt text](image.png)
 
 1. [Using OCI JCA provider to generate CSR](https://www.ateam-oracle.com/post/oci-jca-provider-use-case-generate-csr)
-2. jarsigner blog ling (TBD)
+2. [Using OCI JVA provider and Signed certificate to sign Jar files](https://www.ateam-oracle.com/post/oci-jca-provider-use-case-signing-jar-files)
 
 ## Roadmap
 I am planning to add following updates to the library over next few months.
