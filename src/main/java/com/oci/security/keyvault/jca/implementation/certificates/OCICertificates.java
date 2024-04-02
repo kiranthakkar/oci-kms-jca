@@ -37,12 +37,14 @@ public interface OCICertificates {
     /**
      * Get certificate by alias if exits
      * @param alias certificate alias
+     * @return 
      */
     Certificate getCertificate(String alias);
     
     /**
      * Get Key by alias if exits
      * @param alias certificate alias
+     * @return 
      */
     Key getKey(String alias);
 }

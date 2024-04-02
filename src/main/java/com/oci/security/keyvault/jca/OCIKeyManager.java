@@ -1,6 +1,5 @@
 package com.oci.security.keyvault.jca;
 
-import javax.net.ssl.X509ExtendedKeyManager;
 import java.net.Socket;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -13,9 +12,11 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
+import java.util.logging.Logger;
+
+import javax.net.ssl.X509ExtendedKeyManager;
 
 /**
  * The OCI Key Vault variant of the X509ExtendedKeyManager.

@@ -1,7 +1,8 @@
 package com.oci.security.keyvault.jca.implementation;
 
-import javax.crypto.SecretKey;
 import java.security.PrivateKey;
+
+import javax.crypto.SecretKey;
 
 /**
  * KeyVault fake private which work when key less
@@ -11,17 +12,24 @@ public class OCIPrivateKey implements PrivateKey, SecretKey {
     /**
      * Stores the serial version UID.
      */
-    private static final long serialVersionUID = 12312;
+    public static final long serialVersionUID = 12312;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     private String kid;
     private String algorithm;
     private int length;
     private String keyName;
-    private OCIKeyVaultClient keyVaultClient;
+    private transient OCIKeyVaultClient keyVaultClient;
 
     /**
      * Builder for key vault private key
      * @param algorithm algorithm
      * @param kid The key id
+     * @param keyName
+     * @param length
      * @param keyVaultClient related keyVaultClient
      */
     public OCIPrivateKey(String algorithm, String kid, String keyName,int length, OCIKeyVaultClient keyVaultClient) {
@@ -42,7 +50,7 @@ public class OCIPrivateKey implements PrivateKey, SecretKey {
     
     /**
      * Store the KeyId
-     * @param kid the KeyId
+     * @param client
      */
     public void setOCIKeyVaultClient(OCIKeyVaultClient client) {
         this.keyVaultClient = client;

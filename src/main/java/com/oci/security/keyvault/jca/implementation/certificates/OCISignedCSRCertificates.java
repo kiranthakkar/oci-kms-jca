@@ -1,8 +1,12 @@
 package com.oci.security.keyvault.jca.implementation.certificates;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Key;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -10,40 +14,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static java.util.logging.Level.INFO;
 import java.util.logging.Logger;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import com.oci.security.keyvault.jca.implementation.OCIKeyVaultClient;
-import static java.util.logging.Level.INFO;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class OCISignedCSRCertificates implements OCICertificates{
 	
-	private String certificatePath;
-	private String keyId;
-	private OCIKeyVaultClient ociClient;
+	private final String certificatePath;
+	private final String keyId;
+	private final OCIKeyVaultClient ociClient;
 	/**
      * Stores the list of aliases.
      */
 	 /**
      * Stores the specific path aliases.
      */
-    private List<String> aliases = new ArrayList<>();
+    private final List<String> aliases = new ArrayList<>();
 
     /**
      * Stores the specific path certificates by alias.
      */
-    private Map<String, Certificate> certificates = new HashMap<>();
+    private final Map<String, Certificate> certificates = new HashMap<>();
 
     /**
      * Stores the specific path certificate keys by alias.
      */
-    private Map<String, Key> certificateKeys = new HashMap<>();
+    private final Map<String, Key> certificateKeys = new HashMap<>();
     
     private static final Logger LOGGER = Logger.getLogger(OCISignedCSRCertificates.class.getName());
 
@@ -89,6 +86,9 @@ public class OCISignedCSRCertificates implements OCICertificates{
      * Constructor.
      *
      * @param certificatePath Store the file path where certificates are placed
+     * @param keyId
+     * @param certificateAuthorityId
+     * @param cryptoEndpoint
      */
     public OCISignedCSRCertificates(String certificatePath, String keyId, String certificateAuthorityId,String cryptoEndpoint) {
     	LOGGER.log(INFO, "OCISignedCSRCertificates Constructor is invoked for the Certificate {0}", certificatePath);
@@ -140,6 +140,7 @@ public class OCISignedCSRCertificates implements OCICertificates{
 
     /**
      * Load certificates in the file directory
+     * @param certificatePath certificate path 
      */
     private void loadCertificatesFromSpecificPath(String certificatePath) {
     	LOGGER.log(INFO, "OCISignedCSRCertificates loadCertificatesFromSpecificPath is invoked");
@@ -149,21 +150,6 @@ public class OCISignedCSRCertificates implements OCICertificates{
         } catch (IOException ioe) {
             LOGGER.log(INFO, "Unable to determine certificates to specific path", ioe);
         }
-    }
-
-    /**
-     * Get thumbprint for a certificate
-     *
-     * @param certificate certificate value
-     * @return certificate thumbprint
-     */
-    String getThumbprint(Certificate certificate) {
-        try {
-            return DigestUtils.sha1Hex(certificate.getEncoded());
-        } catch (CertificateEncodingException e) {
-            LOGGER.log(INFO, "Unable to get thumbprint for certificate", e);
-        }
-        return "";
     }
 
     /**

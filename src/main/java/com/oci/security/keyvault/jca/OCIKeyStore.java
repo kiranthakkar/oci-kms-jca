@@ -3,12 +3,12 @@ package com.oci.security.keyvault.jca;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.Key;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.KeyStoreSpi;
 import java.security.NoSuchAlgorithmException;
-import java.security.KeyStoreException;
 import java.security.UnrecoverableEntryException;
-import java.security.Key;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
@@ -17,13 +17,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.logging.Logger;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
+import java.util.logging.Logger;
 
+import com.oci.security.keyvault.jca.implementation.certificates.OCICertificates;
 import com.oci.security.keyvault.jca.implementation.certificates.OCIKeyVaultCertificates;
 import com.oci.security.keyvault.jca.implementation.certificates.OCISignedCSRCertificates;
-import com.oci.security.keyvault.jca.implementation.certificates.OCICertificates;
 
 
 /**
@@ -46,18 +46,18 @@ public final class OCIKeyStore extends KeyStoreSpi {
     /**
      * Store certificates loaded from KeyVault.
      */
-    private OCIKeyVaultCertificates keyVaultCertificates;
+    private final OCIKeyVaultCertificates keyVaultCertificates;
     private OCISignedCSRCertificates ociCSRCertificates;
     
     /**
      * Stores the creation date.
      */
-    private Date creationDate;
+    private final Date creationDate;
 
     /**
      * Stores all the certificates.
      */
-    private List<OCICertificates> allCertificates;
+    private final List<OCICertificates> allCertificates;
     
     private static final Logger LOGGER = Logger.getLogger(OCIKeyStore.class.getName());
 

@@ -57,7 +57,7 @@ public final class OCIJcaProvider extends Provider {
 
     private void initialize() {
     	LOGGER.log(INFO, "OCIJCAProvider initialize is invoked");
-        java.security.AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
+        java.security.AccessController.doPrivilegedWithCombiner((PrivilegedAction<Object>) () -> {
             putService(
                 new Provider.Service(
                     this,

@@ -1,53 +1,83 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.oracle.oci.kms.jce</groupId>
-  <artifactId>oci-kms-jce</artifactId>
-  <version>1.0.0</version>
-  <name>oci-kms-jce</name>
-  
-  <dependencyManagement>
-	  <dependencies>
-	    <dependency>
-	      <groupId>com.oracle.oci.sdk</groupId>
-	      <artifactId>oci-java-sdk-bom</artifactId>
-	      <!-- replace the version below with your required version -->
-	      <version>3.0.0</version>
-	      <type>pom</type>
-	      <scope>import</scope>
-	    </dependency>
-	  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.oracle.oci.kms.jca</groupId>
+	<artifactId>oci-kms-jca</artifactId>
+	<version>1.0.0</version>
+	<name>oci-kms-jca</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.oracle.oci.sdk</groupId>
+				<artifactId>oci-java-sdk-bom</artifactId>
+				<version>3.37.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.oracle.oci.sdk</groupId>
+				<artifactId>oci-java-sdk-common-httpclient-jersey3</artifactId>
+				<version>3.37.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-	  <dependency>
-	    <!-- Since this is the "application" pom.xml, choose the httpclient to use. -->
-	    <groupId>com.oracle.oci.sdk</groupId>
-	    <artifactId>oci-java-sdk-common-httpclient-jersey</artifactId>
-	  </dependency>
-	  <dependency>
-	    <groupId>com.oracle.oci.sdk</groupId>
-	    <artifactId>oci-java-sdk-audit</artifactId>
-	  </dependency>
-	  <dependency>
-	    <groupId>com.oracle.oci.sdk</groupId>
-	    <artifactId>oci-java-sdk-core</artifactId>
-	  </dependency>
-	  <dependency>
-	    <groupId>com.oracle.oci.sdk</groupId>
-	    <artifactId>oci-java-sdk-certificatesmanagement</artifactId>
-	  </dependency>
-	  <dependency>
-	    <groupId>com.oracle.oci.sdk</groupId>
-	    <artifactId>oci-java-sdk-keymanagement</artifactId>
-	  </dependency>
-	  <dependency>
-		  <groupId>com.oracle.oci.sdk</groupId>
-		  <artifactId>oci-java-sdk-certificates</artifactId>
-	  </dependency>
-	  <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging</artifactId>
-        <version>1.1.1</version>
-	  </dependency>
-	  <!-- more dependencies if needed -->
+		<dependency>
+			<groupId>com.oracle.oci.sdk</groupId>
+			<artifactId>oci-java-sdk-common</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk15to18</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcpkix-jdk15to18</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.oci.sdk</groupId>
+			<artifactId>oci-java-sdk-common-httpclient-jersey3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.oci.sdk</groupId>
+			<artifactId>oci-java-sdk-certificatesmanagement</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.oci.sdk</groupId>
+			<artifactId>oci-java-sdk-keymanagement</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.oci.sdk</groupId>
+			<artifactId>oci-java-sdk-certificates</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.16.1</version>
+		</dependency>
+		<!-- more dependencies if needed -->
 	</dependencies>
+
 </project>
