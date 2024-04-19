@@ -55,7 +55,7 @@ public class OCIKeyVaultClient {
 		this.cryptoEndpoint = cryptoEndpoint;
 		this.managementEndpoint = this.cryptoEndpoint.replace("crypto", "management");
 		this.region = this.cryptoEndpoint.substring(this.cryptoEndpoint.indexOf("kms.") + 4,
-				this.cryptoEndpoint.indexOf(".oraclecloud"));
+				this.cryptoEndpoint.indexOf(".oracle"));
 
 		String ociAuthType = System.getProperty("oci.authType");
 		LOGGER.log(INFO, "OCIKeyVaultClient: initialize: OCI Authentication type is: {0}", ociAuthType);
