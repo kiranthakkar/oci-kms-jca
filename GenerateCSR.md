@@ -88,15 +88,15 @@ Once the key is created, use the key to generate signing cert authority. Keytool
 ## Step 2: JCA Provider
 The Java Cryptography Architecture (JCA) is a framework for working with cryptography using the Java programming language. It forms part of the Java Security. It uses provider-based architecture and contains a set of APIs for various purposes like encryption, key management, signing, hashing, signature verification, etc.
 
-You can write custom implementations of the provider. Most cloud providers have JCA provider for key management service on those respective clouds. Similarly, for Oracle cloud, you can download JCA provider (oci-vault-jca.jar) from the Github.
+You can write custom implementations of the provider. Most cloud providers have JCA provider for key management service on those respective clouds. Similarly, for Oracle cloud, you can download JCA provider along with dependencies (![OCI Provider](target/oci-vault-jca.jar), ![Bouncy Castle](target/bcpkix-fips-1.0.3.jar), and ![Bouncy Castle](target/bc-fips-1.0.2.jar)) from the Github.
 
 To configure Java to use the provider, you need below configuration.
 
-1. Add JCA provider jar to the Java environment by copying JCA provider jar in the {JAVA_HOME}/jre/lib/ext.
+1. Copy JCA provider jar along with Bouncycastle dependent jar files (bcpkix-fips-1.0.3.jar and bc-fips-1.0.2.jar) to the Java environment by copying JCA provider jar in the {JAVA_HOME}/jre/lib/ext. For newer java versions, $JRE/lib/ext folder does not exist. You have to specify jar files classpath when you run the command.
 
 ![Add JCA library](jcalibrary.png)
 
-2. Modify java.security file from $JAVA_HOME}/jre/lib/security in your Java environment to include the OCI JCA provider.
+2. Modify java.security file from ${JAVA_HOME}/jre/lib/security in your Java environment to include the OCI JCA provider. For Java versions after Java 8, the java.security file is under ${JAVA_HOME}/conf/security.
 
 ![Configure Java Security](javaSecurityConfig.png)
 
@@ -109,6 +109,8 @@ Dname: Fully qualified domain name for the CSR
 certAuthorityId: OCID of the certificate authority created in step 1.3.
 cryptoEndpoint: Crypto endpoint for the OCI key created in step 1.2.
 
+For Java 8
+
 keytool -v -certreq -alias ${Alias} -file ${File} -keystore NONE -storetype OCIKeyVault -storepass "" \
 -dname "${Dname}" \
 -providerClass com.oci.security.keyvault.jca.OCIJcaProvider \
@@ -117,6 +119,18 @@ keytool -v -certreq -alias ${Alias} -file ${File} -keystore NONE -storetype OCIK
 -J-Djava.util.logging.config.file="logging.properties"
 
 ![Keytool command](keytool.png)
+
+For newer Java versions
+
+keytool -v -certreq -alias Test -file my_cert.csr -keystore NONE -storetype OCIKeyVault -storepass "" \
+-dname "cn=jcatesting, ou=engineering, o=oracle, c=us" \
+-providerClass com.oci.security.keyvault.jca.OCIJcaProvider \
+-providerPath ${PATH_OF_JCA_JARs}/oci-vault-jca.jar \
+-J--module-path="${PATH_OF_JCA_JARs}/oci-vault-jca.jar" \
+-J-Doci.certAuthorityId=${certAuthorityId} \
+-J-Doci.cryptoEndpoint=${cryptoEndpoint} \
+-J-Djava.util.logging.config.file="logging.properties" \
+-J-cp -J${PATH_OF_JCA_JARs}/bc-fips-1.0.2.jar;${PATH_OF_JCA_JARs}/bcpkix-fips-1.0.3.jar 
 
 # Conclusion
 Once the CSR is created, you can submit CSR to the certificate signing authority to get signed certificate. Generating CSR is not the only use case of JCA provider. You can use it for encryption-decryption, signing-verification, and lot of other cryptographic use cases in your java application. One immediate use case that we envision is code signing jar files. That will be covered in the next blog.
