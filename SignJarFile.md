@@ -17,7 +17,7 @@ From a setup perspective, I assume you have followed the steps (OCI Setup and JC
 
 Once the CSR is signed and you receive the signer certificate, we use the signed certificate along with the JCA provider to sign the jar file. Like the keytool command, the jarsigner command also requires some command line parameters related to OCI. Those parameters are below. You may have received signed certificate along with certificate chain from the CA. Extract pem signed certificate. You also need to create certificate chain file. If the Intermediate certificate is provided then create cert chain file using below command.
 
-echo intermediate.pem root.pem > certchain.pem
+cat leaf.pem intermediate.pem root.pem > certchain.pem
 
 Alias: This is name of the certificate file. If the signed certificate filename is certfile.crt, then the alias would be certfile. Alias is the last parameter of jarsigner command without any command line argument.
 certAuthorityId: OCID of the certificate authority created in step 1.3.
